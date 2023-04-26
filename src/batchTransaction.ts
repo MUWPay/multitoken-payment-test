@@ -302,12 +302,14 @@ export const sendBatchTx = async (smartAccount: SmartAccount, amount: BigNumber,
  * 
  */
 
+
+// now here we are starting process to create smartAccount using account abstraction on biconomy.
 const chainId: any = await provider.getSigner().getChainId()
 
 const accountState : any = await smartAccount.getSmartAccountState()
 
  const clientConfig : ClientConfig = {
-	dappAPIKey: "R1cjPxox3.45d82aa5-c928-4d7d-8ba9-89c8fd709327",
+	dappAPIKey: "", // TODO: add API key
 	chainId: accountState.chainId,
 	entryPointAddress: accountState.entryPointAddress,
 	biconomySigningServiceUrl:
@@ -316,7 +318,7 @@ const accountState : any = await smartAccount.getSmartAccountState()
 	bundlerUrl: 'https://sdk-relayer.staging.biconomy.io/api/v1/relay',
 	txServiceUrl: 'https://sdk-backend.staging.biconomy.io/v1'
   }
-
+//test
 console.log('state of aaAccount: ', accountState);
 console.log('client config: ', clientConfig);
   const entrypointInterface : any =  EntryPoint__factory.connect(accountState["entryPointAddress"], provider)
@@ -367,35 +369,35 @@ console.log('client config: ', clientConfig);
 			console.log('gas limit required', verificationGasLimit.toString())
 		
 		
-	// 		const batchTxnDetails : TransactionDetailsForBatchUserOp =  {
-	// 		target:[
-	// 			txs[0].to,
-	// 			txs[1].to
-	// 		],
-	// 		data:[
-	// 			txs[0].data,
-	// 			txs[1].data
-	// 		],
-	// 		value:[
-	// 			amount
+			const batchTxnDetails : TransactionDetailsForBatchUserOp =  {
+			target:[
+				txs[0].to,
+				txs[1].to
+			],
+			data:[
+				txs[0].data,
+				txs[1].data
+			],
+			value:[
+				amount
 
-	// 		],
+			],
 
-	// 		//TODO: use the ethers transactionTypes eip1559 to determine the values of the unsigned txns
-	// 		 gasLimit: verificationGasLimit,
-	// 		// maxFeePerGas: ethers.utils.parseUnits('10', 'gwei'),
-	// 		// maxPriorityFeePerGas: ethers.utils.parseUnits('5', 'gwei')
+			//TODO: use the ethers transactionTypes eip1559 to determine the values of the unsigned txns
+			 gasLimit: verificationGasLimit,
+			// maxFeePerGas: ethers.utils.parseUnits('10', 'gwei'),
+			// maxPriorityFeePerGas: ethers.utils.parseUnits('5', 'gwei')
 
-	// 	}
+		}
 		
-	// 	// just we need to pass the following error : UNPREDICTABLE_GAS_LIMIT .
-	// const userOpData : any = await AccntAbstractionAPI.createUnsignedUserOp(
-	// batchTxnDetails
-	// 	);
+		// just we need to pass the following error : UNPREDICTABLE_GAS_LIMIT .
+	const userOpData : any = await AccntAbstractionAPI.createUnsignedUserOp(
+	batchTxnDetails
+		);
 
-	// 	// and then add the followng operation
+		// and then add the followng operation
 
-	// //await AccntAbstractionAPI.cre
+	//await AccntAbstractionAPI.cre
 
 
 	// console.log("finally the userOpData is", userOpData);
