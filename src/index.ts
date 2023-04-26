@@ -6,8 +6,8 @@ const HDWalletProvider = require("@truffle/hdwallet-provider");
 
 dotenv.config();
 
-const privateKey = process.env.PRIVATE_KEY;
-const rpcUrl = process.env.RPC_URL;
+const privateKey : string | undefined = process.env.PRIVATE_KEY;
+const rpcUrl : any= process.env.RPC_URL;
 const dappAPIKey = process.env.DAPP_API_KEY;
 
 (async () => {
@@ -17,7 +17,7 @@ const dappAPIKey = process.env.DAPP_API_KEY;
 		const smartAccount = await getSmartAccount(walletProvider, dappAPIKey);
 
 		const amount = ethers.BigNumber.from("1");
-		await sendBatchTx(smartAccount, amount);
+		await sendBatchTx(smartAccount, amount, walletProvider, provider);
 
 		process.exit(0);
 	} catch (err) {
