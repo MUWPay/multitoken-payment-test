@@ -283,26 +283,7 @@ export const sendBatchTx = async (
       console.log(feeQuotes[index].tokenGasPrice);
     }
 
-    // const transaction = await smartAccount.createUserPaidTransactionBatch({
-    // 	transactions: txs,
-    // 	feeQuote: feeQuotes[0],
-    // });
-
-    // NOTE: this is another way of creating transactions using Account abstraction.
-
-    /**
- *  chainId: 80001,
-  version: '1.0.0',
-  address: '0x891c864d5a69ef47a734f3089f8d5e849fd7624d',
-  owner: '0x069D9dE7371E16F8E3CADB4B0eafFF40cd977A00',
-  isDeployed: true,
-  entryPointAddress: '0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789',
-  implementationAddress: '0x00006b7e42e01957da540dc6a8f7c30c4d816af5',
-  fallbackHandlerAddress: '0xa04eef9bbfd8f64d5218d4f3a3d03e8282810f51',
-  factoryAddress: '0x000000f9ee1842bb72f6bbdd75e6d3d4e3e9594c'
- * 
- */
-
+  
     // now here we are starting process to create smartAccount using account abstraction on biconomy.
     const chainId: any = await provider.getSigner().getChainId();
 
@@ -344,30 +325,6 @@ export const sendBatchTx = async (
       (await AccntAbstractionAPI.getAccountAddress()).toString()
     );
 
-    // === here createUserPaidTransactionBatch(), the script is failing because of invalid hex value (yes, it is indeed invalid -- you can check from console) ===
-    // creating user paid transaction batch
-    // we will just pay in native token, so selecting index 0 in feeQuotes array
-    // sending transaction
-    // 	const txHash = await smartAccount.sendUserPaidTransaction({
-    // 		tx: transaction,
-    // 	});
-    // 	console.log("Transaction hash is", txHash);
-
-    // now building the transaction to call the function from the AA.
-
-    /**
- * we will be using the following details for the userOp
- * target: string[] (consist of the destination addresses which s )
-  data: BytesLike[]
-  value: BigNumberish[]
-  gasLimit?: BigNumberish
-  maxFeePerGas?: BigNumberish
-  maxPriorityFeePerGas?: BigNumberish
- * 
- * 
- * 
- * 
- */
     console.log("AA state", await AccntAbstractionAPI.getAccountInitCode());
 
     const verificationGasLimit: any =
@@ -390,9 +347,6 @@ export const sendBatchTx = async (
       batchTxnDetails
     );
 
-    // and then add the followng operation
-
-    //await AccntAbstractionAPI.cre
 
     // console.log("finally the userOpData is", userOpData);
   } catch (err) {
